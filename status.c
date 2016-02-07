@@ -30,7 +30,7 @@ getbattery(void) {
 		fputs("Error opening energy_now.\n", stderr);
 		return EXIT_FAILURE;
 	}
-	
+
 	/* if not NULL, read in the value */
 	if(fscanf(fd, "%d", &energy_now) != 1) {
 		fputs("Error in fscanf.\n", stderr);
@@ -42,7 +42,7 @@ getbattery(void) {
 		fputs("Error opening energy_full.\n", stderr);
 		return EXIT_FAILURE;
 	}
-	
+
 	/* if not NULL, read in the value */
 	if(fscanf(fd, "%d", &energy_full) != 1) {
 		fputs("Error in fscanf.\n", stderr);
@@ -57,7 +57,7 @@ getbattery(void) {
 
 	/* if not NULL, read in the value */
 	if(fscanf(fd, "%d", &voltage_now) != 1) {
-		fputs("Error in fscanf.\n", stderr);	
+		fputs("Error in fscanf.\n", stderr);
 		fclose(fd);
 	}
 
@@ -101,22 +101,22 @@ int
 main(void) {
 	char status [200], *datetime;
 	float bat0;
-	
+
 	if (!(dpy = XOpenDisplay(NULL))) {
 		fputs("Cannot open display.\n", stderr);
 		return EXIT_FAILURE;
 	}
-	
+
 	bat0 = getbattery();
 	if (!(datetime = getdatetime())) {
 		return EXIT_FAILURE;
 	}
-	
+
 	snprintf(status, 200, "%0.2f | %s", bat0, datetime);
 
 	free(datetime);
 	setstatus(status);
-	
+
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
 }
