@@ -99,8 +99,7 @@ setstatus(char *str) {
 
 int
 main(void) {
-	char *status;
-	char *datetime;
+	char status [200], *datetime;
 	float bat0;
 	
 	if (!(dpy = XOpenDisplay(NULL))) {
@@ -108,11 +107,6 @@ main(void) {
 		return EXIT_FAILURE;
 	}
 	
-	if ((status = malloc(200)) == NULL) {
-		fputs("Malloc for status failed\n", stderr);
-		return EXIT_FAILURE;
-	}
-
 	bat0 = getbattery();
 	if (!(datetime = getdatetime())) {
 		return EXIT_FAILURE;
@@ -123,7 +117,6 @@ main(void) {
 	free(datetime);
 	setstatus(status);
 	
-	free(status);
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
 }
